@@ -1,0 +1,4 @@
+.nav-logo {
+  height: 40px;      /* adjust to fit your nav height */
+  width: auto;       /* keeps the aspect ratio */
+}
