@@ -655,8 +655,8 @@
         <small>Latest Announcement</small>
         This Week's Poster
       </div>
-      <a class="tg-link" id="tg-channel-link" href="https://t.me/LebuKHCyouth" target="_blank" rel="noopener">
-        Open Channel → 
+      <a class="tg-link" id="tg-channel-link" href="https://t.me/YOUR_TELEGRAM_CHANNEL" target="_blank" rel="noopener">
+        Open Channel →
       </a>
     </div>
 
@@ -675,54 +675,73 @@
 
   <script>
     // ════════════════════════════════════════════════════════════════
-    //  SETUP — replace YOUR_TELEGRAM_CHANNEL with your public
+    //  SETUP — replace the value below with your public Telegram
     //  channel username (no @ sign), e.g.  "LebuyouthKHC"
     // ════════════════════════════════════════════════════════════════
     const TG_CHANNEL = 'LebuKHCyouth';
     // ════════════════════════════════════════════════════════════════
 
-    // Update the "Open Channel" button href
     document.getElementById('tg-channel-link').href = 'https://t.me/' + TG_CHANNEL;
 
-    function formatDate(dateStr) {
-      const d = new Date(dateStr);
-      if (isNaN(d)) return '';
-      return d.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+    const CONTAINER = document.getElementById('poster-container');
+
+    function strip(html) {
+      return (html || '').replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
     }
 
-    function truncate(str, max) {
-      if (!str) return '';
-      // Strip HTML tags from caption
-      const plain = str.replace(/<[^>]*>/g, '').trim();
-      return plain.length > max ? plain.slice(0, max).trim() + '…' : plain;
+    function trunc(str, n) {
+      return str.length > n ? str.slice(0, n).trimEnd() + '…' : str;
     }
 
-    function showError(msg) {
-      document.getElementById('poster-container').innerHTML = `
+    function fmtDate(str) {
+      const d = new Date(str);
+      return isNaN(d) ? '' : d.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+    }
+
+    function showSetup() {
+      CONTAINER.innerHTML = `
         <div class="poster-error">
-          <h3>Set Up Your Channel</h3>
+          <h3>Connect Your Channel</h3>
           <p>
-            Open <code>index.html</code> and set your channel name:<br><br>
-            <code>const TG_CHANNEL = 'YourChannelName';</code><br><br>
-            Your channel must be <strong style="color:var(--off-white)">public</strong>.
-            Once set, your latest announcement poster will appear here automatically every time someone visits.
-            ${msg ? '<br><br><span style="color:var(--muted);font-size:0.68rem;">' + msg + '</span>' : ''}
+            In <code>index.html</code> find this line near the bottom and update it:<br><br>
+            <code>const TG_CHANNEL = 'YOUR_TELEGRAM_CHANNEL';</code><br><br>
+            Replace <code>YOUR_TELEGRAM_CHANNEL</code> with your channel's public username (no @).
+            Your channel must be <strong style="color:var(--off-white)">public</strong> for this to work.
+          </p>
+        </div>`;
+    }
+
+    function showFail(detail) {
+      CONTAINER.innerHTML = `
+        <div class="poster-error">
+          <h3>Could Not Load Poster</h3>
+          <p>
+            Make sure your Telegram channel is <strong style="color:var(--off-white)">public</strong>
+            and the channel name in <code>index.html</code> is correct.<br><br>
+            <span style="color:var(--muted);font-size:0.68rem;">${detail || ''}</span><br><br>
+            In the meantime, <a href="https://t.me/${TG_CHANNEL}" target="_blank" style="color:var(--orange);">view the channel directly →</a>
           </p>
         </div>`;
     }
 
     function renderPoster(imgSrc, caption, date, postUrl) {
-      document.getElementById('poster-container').innerHTML = `
-        <div class="poster-card">
-          <a class="poster-img-wrap" href="${postUrl}" target="_blank" rel="noopener" aria-label="Open post in Telegram">
-            <img src="${imgSrc}" alt="Latest announcement poster" loading="eager" />
-          </a>
+      const imgHalf = imgSrc ? `
+        <a class="poster-img-wrap" href="${postUrl}" target="_blank" rel="noopener">
+          <img src="${imgSrc}" alt="Latest announcement poster" loading="eager"
+               onerror="this.closest('.poster-img-wrap').style.display='none';this.closest('.poster-card').style.gridTemplateColumns='1fr'" />
+        </a>` : '';
+
+      CONTAINER.innerHTML = `
+        <div class="poster-card" style="${!imgSrc ? 'grid-template-columns:1fr' : ''}">
+          ${imgHalf}
           <div class="poster-meta">
             <span class="poster-badge">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M21.2 5.1L2.9 12.1c-1.1.4-1.1 1.1-.2 1.4l4.6 1.4 1.8 5.5c.2.6.4.8.9.8.4 0 .6-.2 1-.5l2.4-2.3 4.7 3.5c.9.5 1.5.2 1.7-.8L22 6.2c.3-1.2-.4-1.7-1.2-1.1z"/></svg>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M21.2 5.1L2.9 12.1c-1.1.4-1.1 1.1-.2 1.4l4.6 1.4 1.8 5.5c.2.6.4.8.9.8.4 0 .6-.2 1-.5l2.4-2.3 4.7 3.5c.9.5 1.5.2 1.7-.8L22 6.2c.3-1.2-.4-1.7-1.2-1.1z"/>
+              </svg>
               Latest from Telegram
             </span>
-            <p class="poster-caption">${caption || 'Tap the image to view the full post on Telegram.'}</p>
+            <p class="poster-caption">${caption || 'Open Telegram to read the full announcement.'}</p>
             <div class="poster-footer">
               <span class="poster-date">${date}</span>
               <a class="poster-open" href="${postUrl}" target="_blank" rel="noopener">
@@ -735,75 +754,87 @@
     }
 
     async function loadPoster() {
-      if (!TG_CHANNEL || TG_CHANNEL === 'YOUR_TELEGRAM_CHANNEL') {
-        showError('');
-        return;
-      }
+      if (!TG_CHANNEL || TG_CHANNEL === 'YOUR_TELEGRAM_CHANNEL') { showSetup(); return; }
 
-      // Use RSS2JSON (free, no account) to parse Telegram's public channel RSS feed
-      const rssUrl   = `https://t.me/s/${TG_CHANNEL}`;
-      const apiUrl   = `https://api.rss2json.com/v1/api.json?rss_url=https://rsshub.app/telegram/channel/${TG_CHANNEL}&order=pubDate&count=20`;
+      // Fetch Telegram's public web preview page via allorigins CORS proxy
+      // allorigins.win is free, open-source, and returns the raw HTML
+      const pageUrl  = `https://t.me/s/${TG_CHANNEL}`;
+      const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(pageUrl)}`;
 
       try {
-        const res  = await fetch(apiUrl);
-        const data = await res.json();
+        const res  = await fetch(proxyUrl);
+        if (!res.ok) throw new Error('Proxy ' + res.status);
+        const json = await res.json();
+        const html = json.contents;
+        if (!html) throw new Error('Empty response');
 
-        if (data.status !== 'ok' || !data.items || data.items.length === 0) {
-          throw new Error('No items in feed');
+        // Parse the returned HTML string using DOMParser — safe, no script execution
+        const doc  = new DOMParser().parseFromString(html, 'text/html');
+
+        // Telegram's web preview wraps each post in .tgme_widget_message_wrap
+        // The most recent posts are last in the list
+        const posts = Array.from(doc.querySelectorAll('.tgme_widget_message_wrap'));
+        if (!posts.length) throw new Error('No posts found — is the channel public?');
+
+        // Work backwards from the newest post to find one with a photo
+        let foundImg = '', foundCaption = '', foundDate = '', foundUrl = '';
+
+        for (let i = posts.length - 1; i >= 0; i--) {
+          const post = posts[i];
+
+          // Photo: Telegram renders photos as inline background-image on .tgme_widget_message_photo_wrap
+          // or as <img> inside .tgme_widget_message_photo
+          const photoWrap = post.querySelector('.tgme_widget_message_photo_wrap');
+          const imgEl     = post.querySelector('.tgme_widget_message_photo img, .media_photo img');
+
+          let src = '';
+          if (photoWrap) {
+            // background-image: url("https://...")
+            const style = photoWrap.getAttribute('style') || '';
+            const m = style.match(/url\(['"]?(https?:\/\/[^'")\s]+)['"]?\)/i);
+            if (m) src = m[1];
+          }
+          if (!src && imgEl) {
+            src = imgEl.src || imgEl.getAttribute('src') || '';
+          }
+
+          if (!src) continue; // no image on this post, keep looking
+
+          // Caption text
+          const captionEl = post.querySelector('.tgme_widget_message_text');
+          foundCaption = captionEl ? trunc(strip(captionEl.innerHTML), 300) : '';
+
+          // Date / link
+          const timeEl = post.querySelector('time');
+          foundDate = timeEl ? fmtDate(timeEl.getAttribute('datetime') || '') : '';
+
+          const linkEl = post.querySelector('.tgme_widget_message_date');
+          foundUrl = linkEl ? (linkEl.href || linkEl.getAttribute('href') || `https://t.me/${TG_CHANNEL}`) : `https://t.me/${TG_CHANNEL}`;
+
+          foundImg = src;
+          break;
         }
 
-        // Find the most recent post that has an image
-        const postWithImage = data.items.find(item => {
-          // Check enclosure (direct image attachment)
-          if (item.enclosure && item.enclosure.link && item.enclosure.type && item.enclosure.type.startsWith('image')) return true;
-          // Check thumbnail
-          if (item.thumbnail && item.thumbnail.length > 5) return true;
-          // Check content for <img> tag
-          if (item.content && /<img/i.test(item.content)) return true;
-          return false;
-        });
-
-        if (!postWithImage) {
-          // Fall back to just the latest post even without image
-          const latest = data.items[0];
+        if (!foundImg) {
+          // No photo post found — show latest post text-only
+          const last = posts[posts.length - 1];
+          const captionEl = last && last.querySelector('.tgme_widget_message_text');
+          const timeEl    = last && last.querySelector('time');
+          const linkEl    = last && last.querySelector('.tgme_widget_message_date');
           renderPoster(
-            '', // no image
-            truncate(latest.description || latest.content, 320),
-            formatDate(latest.pubDate),
-            latest.link || `https://t.me/${TG_CHANNEL}`
+            '',
+            captionEl ? trunc(strip(captionEl.innerHTML), 300) : '',
+            timeEl    ? fmtDate(timeEl.getAttribute('datetime') || '') : '',
+            linkEl    ? (linkEl.href || `https://t.me/${TG_CHANNEL}`) : `https://t.me/${TG_CHANNEL}`
           );
-          // But hide the image pane if there's no image
-          setTimeout(() => {
-            const wrap = document.querySelector('.poster-img-wrap');
-            if (wrap) wrap.style.display = 'none';
-            const card = document.querySelector('.poster-card');
-            if (card) card.style.gridTemplateColumns = '1fr';
-          }, 50);
           return;
         }
 
-        // Extract image URL
-        let imgSrc = '';
-        if (postWithImage.thumbnail && postWithImage.thumbnail.length > 5) {
-          imgSrc = postWithImage.thumbnail;
-        } else if (postWithImage.enclosure && postWithImage.enclosure.link) {
-          imgSrc = postWithImage.enclosure.link;
-        } else {
-          // Parse from content HTML
-          const match = (postWithImage.content || '').match(/<img[^>]+src=["']([^"']+)["']/i);
-          if (match) imgSrc = match[1];
-        }
-
-        renderPoster(
-          imgSrc,
-          truncate(postWithImage.description || postWithImage.content, 320),
-          formatDate(postWithImage.pubDate),
-          postWithImage.link || `https://t.me/${TG_CHANNEL}`
-        );
+        renderPoster(foundImg, foundCaption, foundDate, foundUrl);
 
       } catch (err) {
-        console.warn('Poster fetch failed:', err);
-        showError('Could not load feed. Make sure your channel is public and the name is correct.');
+        console.warn('Poster load error:', err);
+        showFail(err.message);
       }
     }
 
