@@ -915,6 +915,110 @@
     </div>
   </section>
 
+  <!-- PRAYER SECTION -->
+<section class="section" style="background: var(--mid); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <p class="section-label">Prayer Wall</p>
+  <h2 class="socials-title" style="margin-bottom: 0.8rem;">Send a Prayer</h2>
+  <p style="font-size:0.75rem; letter-spacing:0.15em; color:var(--muted); text-transform:uppercase; line-height:1.9; margin-bottom: 2.5rem; max-width:480px;">
+    This is completely anonymous — no name, no account, nothing. Just your prayer. Our team receives it privately and prays with you.
+  </p>
+
+  <div style="max-width: 620px;">
+
+    <div id="prayer-result" style="display:none; margin-bottom:1.5rem;"></div>
+
+    <textarea
+      id="prayer-input"
+      placeholder="Write your prayer here…"
+      rows="6"
+      style="
+        width: 100%;
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        color: var(--off-white);
+        font-family: 'Space Mono', monospace;
+        font-size: 0.8rem;
+        line-height: 1.9;
+        padding: 1.2rem;
+        resize: vertical;
+        outline: none;
+        transition: border-color 0.2s;
+        box-sizing: border-box;
+      "
+      onfocus="this.style.borderColor='var(--orange)'"
+      onblur="this.style.borderColor='rgba(255,102,0,0.2)'"
+    ></textarea>
+
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-top:1rem; flex-wrap:wrap; gap:1rem;">
+      <p style="font-size:0.62rem; letter-spacing:0.18em; color:var(--muted); text-transform:uppercase;">
+        🔒 100% anonymous · We never see who you are
+      </p>
+      <button
+        id="prayer-btn"
+        onclick="submitPrayer()"
+        style="
+          background: var(--orange);
+          color: var(--black);
+          border: none;
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 1.1rem;
+          letter-spacing: 0.12em;
+          padding: 0.7rem 2rem;
+          cursor: pointer;
+          transition: background 0.2s, transform 0.1s;
+        "
+        onmouseover="this.style.background='#cc4f00'"
+        onmouseout="this.style.background='var(--orange)'"
+      >Send Prayer →</button>
+    </div>
+  </div>
+</section>
+
+<script>
+  async function submitPrayer() {
+    const input  = document.getElementById('prayer-input');
+    const btn    = document.getElementById('prayer-btn');
+    const result = document.getElementById('prayer-result');
+    const text   = input.value.trim();
+
+    if (!text || text.length < 5) {
+      result.style.display = 'block';
+      result.innerHTML = `<p style="font-size:0.75rem;letter-spacing:0.15em;color:var(--orange);text-transform:uppercase;">Please write your prayer first.</p>`;
+      return;
+    }
+
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+
+    try {
+      const res  = await fetch('/api/prayer', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prayer: text })
+      });
+      const data = await res.json();
+
+      if (data.ok) {
+        input.value = '';
+        result.style.display = 'block';
+        result.innerHTML = `
+          <div style="border:1px solid var(--border);padding:1.2rem 1.5rem;background:var(--card-bg);">
+            <p style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:0.08em;color:var(--orange);margin-bottom:0.3rem;">🙏 Prayer Received</p>
+            <p style="font-size:0.72rem;letter-spacing:0.15em;color:var(--muted);text-transform:uppercase;line-height:1.9;">Your prayer has been sent anonymously. Our team will pray with you.</p>
+          </div>`;
+      } else {
+        throw new Error(data.error || 'Failed');
+      }
+    } catch {
+      result.style.display = 'block';
+      result.innerHTML = `<p style="font-size:0.75rem;letter-spacing:0.15em;color:var(--orange);text-transform:uppercase;">Something went wrong. Please try again.</p>`;
+    }
+
+    btn.textContent = 'Send Prayer →';
+    btn.disabled = false;
+  }
+</script>
+
   <!-- MAP SECTION -->
 <section class="section" style="background: var(--black); padding-top: 5rem; padding-bottom: 0;">
   <p class="section-label">Find Us</p>
