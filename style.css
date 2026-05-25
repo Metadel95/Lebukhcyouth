@@ -1,5 +1,5 @@
 .nav-logo {
   height: 40px;
-  width: auto;
+  width: 100%;
   max-width: 150px; /* add a max-width as a fallback */
 }
