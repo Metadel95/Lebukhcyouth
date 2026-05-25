@@ -975,6 +975,9 @@
 </section>
 
 <script>
+  // ← paste your Apps Script Web App URL here
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxX1L9P-5JW8kuLMe0oUKxZprsUcvlVwkurPGtDNwCoVufPACtlNDZYvmJiguIPAK6X/exec';
+
   async function submitPrayer() {
     const input  = document.getElementById('prayer-input');
     const btn    = document.getElementById('prayer-btn');
@@ -989,26 +992,27 @@
 
     btn.textContent = 'Sending…';
     btn.disabled = true;
+    result.style.display = 'none';
 
     try {
-      const res  = await fetch('/api/prayer', {
+      // Use no-cors mode — Google Apps Script requires this from browsers
+      await fetch(SHEET_URL, {
         method: 'POST',
+        mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prayer: text })
       });
-      const data = await res.json();
 
-      if (data.ok) {
-        input.value = '';
-        result.style.display = 'block';
-        result.innerHTML = `
-          <div style="border:1px solid var(--border);padding:1.2rem 1.5rem;background:var(--card-bg);">
-            <p style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:0.08em;color:var(--orange);margin-bottom:0.3rem;">🙏 Prayer Received</p>
-            <p style="font-size:0.72rem;letter-spacing:0.15em;color:var(--muted);text-transform:uppercase;line-height:1.9;">Your prayer has been sent anonymously. Our team will pray with you.</p>
-          </div>`;
-      } else {
-        throw new Error(data.error || 'Failed');
-      }
+      // no-cors returns an opaque response so we can't read it,
+      // but if fetch didn't throw, the request was sent successfully
+      input.value = '';
+      result.style.display = 'block';
+      result.innerHTML = `
+        <div style="border:1px solid var(--border);padding:1.2rem 1.5rem;background:var(--card-bg);">
+          <p style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:0.08em;color:var(--orange);margin-bottom:0.3rem;">🙏 Prayer Received</p>
+          <p style="font-size:0.72rem;letter-spacing:0.15em;color:var(--muted);text-transform:uppercase;line-height:1.9;">Your prayer has been sent anonymously. Our team will pray with you.</p>
+        </div>`;
+
     } catch {
       result.style.display = 'block';
       result.innerHTML = `<p style="font-size:0.75rem;letter-spacing:0.15em;color:var(--orange);text-transform:uppercase;">Something went wrong. Please try again.</p>`;
