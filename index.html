@@ -6,7 +6,7 @@
   <title>Lebu KHC Youth</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <style>
     :root {
       --orange: #ff6600;
@@ -42,7 +42,6 @@
       z-index: 0;
       opacity: 0.5;
     }
-
 
     /* ── HERO ── */
     .hero {
@@ -604,9 +603,9 @@
 
   <!-- NAV -->
   <nav class="nav">
-  <img src="logo.svg" alt="Lebu KHC Youth" class="nav-logo" height="40" width="auto" />
-  <span class="nav-tag">Addis Ababa · Ethiopia</span>
-</nav>
+    <span class="nav-logo">Lebu KHC Youth</span>
+    <span class="nav-tag">Addis Ababa · Ethiopia</span>
+  </nav>
 
   <!-- HERO -->
   <section class="hero">
@@ -656,7 +655,7 @@
         <small>Latest Announcement</small>
         This Week's Poster
       </div>
-      <a class="tg-link" id="tg-channel-link" href="https://t.me/LebuKHCyouth" target="_blank" rel="noopener">
+      <a class="tg-link" id="tg-channel-link" href="https://t.me/YOUR_TELEGRAM_CHANNEL" target="_blank" rel="noopener">
         Open Channel →
       </a>
     </div>
@@ -757,89 +756,20 @@
     async function loadPoster() {
       if (!TG_CHANNEL || TG_CHANNEL === 'YOUR_TELEGRAM_CHANNEL') { showSetup(); return; }
 
-      // Fetch Telegram's public web preview page via allorigins CORS proxy
-      // allorigins.win is free, open-source, and returns the raw HTML
-      const pageUrl  = `https://t.me/s/${TG_CHANNEL}`;
-      const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(pageUrl)}`;
-
       try {
-        const res  = await fetch(proxyUrl);
-        if (!res.ok) throw new Error('Proxy ' + res.status);
-        const json = await res.json();
-        const html = json.contents;
-        if (!html) throw new Error('Empty response');
-
-        // Parse the returned HTML string using DOMParser — safe, no script execution
-        const doc  = new DOMParser().parseFromString(html, 'text/html');
-
-        // Telegram's web preview wraps each post in .tgme_widget_message_wrap
-        // The most recent posts are last in the list
-        const posts = Array.from(doc.querySelectorAll('.tgme_widget_message_wrap'));
-        if (!posts.length) throw new Error('No posts found — is the channel public?');
-
-        // Work backwards from the newest post to find one with a photo
-        let foundImg = '', foundCaption = '', foundDate = '', foundUrl = '';
-
-        for (let i = posts.length - 1; i >= 0; i--) {
-          const post = posts[i];
-
-          // Photo: Telegram renders photos as inline background-image on .tgme_widget_message_photo_wrap
-          // or as <img> inside .tgme_widget_message_photo
-          const photoWrap = post.querySelector('.tgme_widget_message_photo_wrap');
-          const imgEl     = post.querySelector('.tgme_widget_message_photo img, .media_photo img');
-
-          let src = '';
-          if (photoWrap) {
-            // background-image: url("https://...")
-            const style = photoWrap.getAttribute('style') || '';
-            const m = style.match(/url\(['"]?(https?:\/\/[^'")\s]+)['"]?\)/i);
-            if (m) src = m[1];
-          }
-          if (!src && imgEl) {
-            src = imgEl.src || imgEl.getAttribute('src') || '';
-          }
-
-          if (!src) continue; // no image on this post, keep looking
-
-          // Caption text
-          const captionEl = post.querySelector('.tgme_widget_message_text');
-          foundCaption = captionEl ? trunc(strip(captionEl.innerHTML), 300) : '';
-
-          // Date / link
-          const timeEl = post.querySelector('time');
-          foundDate = timeEl ? fmtDate(timeEl.getAttribute('datetime') || '') : '';
-
-          const linkEl = post.querySelector('.tgme_widget_message_date');
-          foundUrl = linkEl ? (linkEl.href || linkEl.getAttribute('href') || `https://t.me/${TG_CHANNEL}`) : `https://t.me/${TG_CHANNEL}`;
-
-          foundImg = src;
-          break;
-        }
-
-        if (!foundImg) {
-          // No photo post found — show latest post text-only
-          const last = posts[posts.length - 1];
-          const captionEl = last && last.querySelector('.tgme_widget_message_text');
-          const timeEl    = last && last.querySelector('time');
-          const linkEl    = last && last.querySelector('.tgme_widget_message_date');
-          renderPoster(
-            '',
-            captionEl ? trunc(strip(captionEl.innerHTML), 300) : '',
-            timeEl    ? fmtDate(timeEl.getAttribute('datetime') || '') : '',
-            linkEl    ? (linkEl.href || `https://t.me/${TG_CHANNEL}`) : `https://t.me/${TG_CHANNEL}`
-          );
-          return;
-        }
-
-        renderPoster(foundImg, foundCaption, foundDate, foundUrl);
-
+        // Call our Vercel Edge Function — server-side fetch, CDN-cached for 30 min
+        const res  = await fetch('/api/poster');
+        if (!res.ok) throw new Error('API ' + res.status);
+        const data = await res.json();
+        if (!data.ok) throw new Error(data.error || 'No photo found');
+        renderPoster(data.imgSrc, data.caption, fmtDate(data.date), data.postUrl);
       } catch (err) {
         console.warn('Poster load error:', err);
         showFail(err.message);
       }
     }
 
-    loadPoster();
+        loadPoster();
   </script>
 
   <!-- ABOUT STRIP -->
@@ -860,7 +790,7 @@
     <div class="socials-grid">
 
       <!-- Instagram -->
-      <a class="social-card" href="https://www.instagram.com/lebu_khc/" target="_blank" rel="noopener">
+      <a class="social-card" href="https://instagram.com/YOUR_INSTAGRAM_HANDLE" target="_blank" rel="noopener">
         <div class="social-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
@@ -868,7 +798,7 @@
         </div>
         <div>
           <div class="social-name">Instagram</div>
-          <div class="social-handle">@lebu_khc</div>
+          <div class="social-handle">@YOUR_INSTAGRAM_HANDLE</div>
         </div>
         <div class="social-arrow">
           Follow us
@@ -877,7 +807,7 @@
       </a>
 
       <!-- Telegram -->
-      <a class="social-card" href="https://t.me/LebuKHCyouth" target="_blank" rel="noopener">
+      <a class="social-card" href="https://t.me/YOUR_TELEGRAM_CHANNEL" target="_blank" rel="noopener">
         <div class="social-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21.2 5.1L2.9 12.1c-1.1.4-1.1 1.1-.2 1.4l4.6 1.4 1.8 5.5c.2.6.4.8.9.8.4 0 .6-.2 1-.5l2.4-2.3 4.7 3.5c.9.5 1.5.2 1.7-.8L22 6.2c.3-1.2-.4-1.7-1.2-1.1z"/>
@@ -885,7 +815,7 @@
         </div>
         <div>
           <div class="social-name">Telegram</div>
-          <div class="social-handle">@LebuKHCyouth</div>
+          <div class="social-handle">@YOUR_TELEGRAM_CHANNEL</div>
         </div>
         <div class="social-arrow">
           Join Channel
@@ -894,7 +824,7 @@
       </a>
 
       <!-- YouTube -->
-      <a class="social-card" href="https://www.youtube.com/@lkhcyouth" target="_blank" rel="noopener">
+      <a class="social-card" href="https://youtube.com/@YOUR_YOUTUBE_HANDLE" target="_blank" rel="noopener">
         <div class="social-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.45A2.78 2.78 0 0 0 1.46 6.42 29.94 29.94 0 0 0 1 12a29.94 29.94 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.97C5.12 20 12 20 12 20s6.88 0 8.59-.45a2.78 2.78 0 0 0 1.95-1.97A29.94 29.94 0 0 0 23 12a29.94 29.94 0 0 0-.46-5.58z"/>
@@ -903,7 +833,7 @@
         </div>
         <div>
           <div class="social-name">YouTube</div>
-          <div class="social-handle">@lkhcyouth</div>
+          <div class="social-handle">@YOUR_YOUTUBE_HANDLE</div>
         </div>
         <div class="social-arrow">
           Watch Now
@@ -912,7 +842,7 @@
       </a>
 
       <!-- TikTok -->
-      <a class="social-card" href="https://tiktok.com/@lebu_khc" target="_blank" rel="noopener">
+      <a class="social-card" href="https://tiktok.com/@YOUR_TIKTOK_HANDLE" target="_blank" rel="noopener">
         <div class="social-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/>
@@ -920,10 +850,44 @@
         </div>
         <div>
           <div class="social-name">TikTok</div>
-          <div class="social-handle">@lebu_khc</div>
+          <div class="social-handle">@YOUR_TIKTOK_HANDLE</div>
         </div>
         <div class="social-arrow">
           Watch Shorts
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </div>
+      </a>
+
+      <!-- Facebook -->
+      <a class="social-card" href="https://facebook.com/YOUR_FACEBOOK_PAGE" target="_blank" rel="noopener">
+        <div class="social-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="social-name">Facebook</div>
+          <div class="social-handle">Lebu KHC Youth</div>
+        </div>
+        <div class="social-arrow">
+          Like Page
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </div>
+      </a>
+
+      <!-- Twitter / X -->
+      <a class="social-card" href="https://x.com/YOUR_TWITTER_HANDLE" target="_blank" rel="noopener">
+        <div class="social-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="social-name">Twitter / X</div>
+          <div class="social-handle">@YOUR_TWITTER_HANDLE</div>
+        </div>
+        <div class="social-arrow">
+          Follow
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
         </div>
       </a>
