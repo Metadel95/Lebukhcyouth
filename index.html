@@ -593,6 +593,7 @@
 
     /* ── TICKER STRIP ── */
     /* AFTER */
+    /* AFTER */
     .ticker {
       background: var(--orange);
       color: var(--black);
@@ -600,8 +601,8 @@
       overflow: hidden;
       white-space: nowrap;
       max-width: 100%;
-      contain: paint;
-}
+      transform: translateZ(0);
+      will-change: transform;
     }
 
     .ticker-inner {
