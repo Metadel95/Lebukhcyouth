@@ -122,8 +122,10 @@ Change it there to update the entire site.
 
 ```
 /
-├── index.html      ← The entire site (single file)
-└── README.md       ← This file
+├── index.html
+├── api/
+│   └── poster.js   ← new file
+└── README.md
 ```
 
 No build step, no dependencies, no node_modules. Just HTML.
