@@ -266,14 +266,18 @@
     .tg-link:hover { background: var(--orange); color: var(--black); }
 
     /* Main poster card */
+    /* AFTER */
     .poster-card {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 2px;
       background: var(--border);
       border: 1px solid var(--border);
-    }
+      max-width: 100%;
+      overflow: hidden;
+}
 
+    /* AFTER */
     .poster-img-wrap {
       position: relative;
       overflow: hidden;
@@ -282,6 +286,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      width: 100%;
+      max-width: 100%;
     }
 
     .poster-img-wrap img {
@@ -296,6 +302,7 @@
 
     .poster-img-wrap:hover img { transform: scale(1.03); }
 
+    /* AFTER */
     .poster-meta {
       background: var(--card-bg);
       padding: 2.5rem;
@@ -303,6 +310,8 @@
       flex-direction: column;
       justify-content: space-between;
       gap: 1.5rem;
+      overflow: hidden;
+      min-width: 0;
     }
 
     .poster-badge {
@@ -319,12 +328,16 @@
       width: fit-content;
     }
 
+    /* AFTER */
     .poster-caption {
       font-size: 0.82rem;
       line-height: 2;
       color: var(--off-white);
       flex: 1;
-    }
+      overflow-wrap: break-word;
+      word-break: break-word;
+      max-width: 100%;
+}
 
     .poster-footer {
       display: flex;
