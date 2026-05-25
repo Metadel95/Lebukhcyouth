@@ -578,12 +578,16 @@
     }
 
     /* ── TICKER STRIP ── */
+    /* AFTER */
     .ticker {
       background: var(--orange);
       color: var(--black);
       padding: 0.6rem 0;
       overflow: hidden;
       white-space: nowrap;
+      max-width: 100%;
+      contain: paint;
+}
     }
 
     .ticker-inner {
