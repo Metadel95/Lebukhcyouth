@@ -69,7 +69,7 @@ export default async function handler() {
       headers: {
         'Content-Type': 'application/json',
         // Cache on Vercel's edge CDN for 30 min, allow stale for up to 1 hour
-        'Cache-Control': 's-maxage=1800, stale-while-revalidate=3600',
+        'Cache-Control': 's-maxage=300, stale-while-revalidate=600',
         'Access-Control-Allow-Origin': '*',
       },
     });
