@@ -1,873 +1,865 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="https://res.cloudinary.com/dgxqifwdf/image/upload/v1779730418/youth_logo_cjn642.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lebu KHC Youth</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --orange: #ff6600;
-      --orange-dark: #cc4f00;
-      --orange-glow: rgba(255, 102, 0, 0.18);
-      --black: #0a0a0a;
-      --off-white: #f2ede6;
-      --mid: #1a1a1a;
-      --muted: #6b6b6b;
-      --card-bg: #111111;
-      --border: rgba(255, 102, 0, 0.2);
-    }
+<meta charset="UTF-8" />
+<link rel="icon" type="image/svg+xml" href="https://res.cloudinary.com/dgxqifwdf/image/upload/v1779730418/youth_logo_cjn642.svg" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lebu KHC Youth</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --orange: #ff6600;
+  --orange-dark: #cc4f00;
+  --orange-glow: rgba(255, 102, 0, 0.18);
+  --black: #0a0a0a;
+  --off-white: #f2ede6;
+  --mid: #1a1a1a;
+  --muted: #6b6b6b;
+  --card-bg: #111111;
+  --border: rgba(255, 102, 0, 0.2);
+}
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--off-white);
+  font-family: 'Space Mono', monospace;
+  overflow-x: hidden;
+  cursor: crosshair;
+}
 
-    html { scroll-behavior: smooth; }
+/* ── NOISE TEXTURE OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+}
 
-    body {
-      background: var(--black);
-      color: var(--off-white);
-      font-family: 'Space Mono', monospace;
-      overflow-x: hidden;
-      cursor: crosshair;
-    }
+/* ── HERO ── */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 8rem 2.5rem 4rem;
+  overflow: hidden;
+}
 
-    /* ── NOISE TEXTURE OVERLAY ── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.5;
-    }
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 60% 30%, rgba(255,102,0,0.12) 0%, transparent 70%),
+    linear-gradient(160deg, #0a0a0a 40%, #1a0800 100%);
+  z-index: 0;
+}
 
-    /* ── HERO ── */
-    .hero {
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 8rem 2.5rem 4rem;
-      overflow: hidden;
-    }
-
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 80% 60% at 60% 30%, rgba(255,102,0,0.12) 0%, transparent 70%),
-        linear-gradient(160deg, #0a0a0a 40%, #1a0800 100%);
-      z-index: 0;
-    }
-
-    .hero-lines {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      overflow: hidden;
-    }
+.hero-lines {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
 
     .hero-lines svg {
       width: 100%;
       height: 100%;
     }
 
-    .hero-content {
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-eyebrow {
-      font-size: 0.7rem;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--orange);
-      margin-bottom: 1.2rem;
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-    }
-
-    .hero-eyebrow::before {
-      content: '';
-      display: block;
-      width: 32px;
-      height: 2px;
-      background: var(--orange);
-    }
-
-    .hero-title {
-      font-family: 'bebas neue', sans-serif;
-      font-size: clamp(4.5rem, 13vw, 11rem);
-      line-height: 0.88;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-      color: var(--off-white);
-    }
-
-    .hero-title span {
-      color: var(--orange);
-      display: block;
-    }
-
-    .hero-sub {
-      margin-top: 2rem;
-      font-size: 0.75rem;
-      letter-spacing: 0.15em;
-      color: var(--muted);
-      text-transform: uppercase;
-      max-width: 360px;
-      line-height: 1.9;
-    }
-
-    .hero-scroll {
-      margin-top: 3rem;
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      font-size: 0.65rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .hero-scroll .line {
-      width: 48px;
-      height: 1px;
-      background: var(--muted);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-scroll .line::after {
-      content: '';
-      position: absolute;
-      top: 0; left: -100%;
-      width: 100%; height: 100%;
-      background: var(--orange);
-      animation: scan 2s ease-in-out infinite;
-    }
-
-    @keyframes scan {
-      0% { left: -100%; }
-      100% { left: 100%; }
-    }
-
-    /* ── DIAGONAL DIVIDER ── */
-    .divider {
-      height: 80px;
-      background: var(--black);
-      position: relative;
-      z-index: 2;
-    }
-
-    /* ── SECTION LAYOUT ── */
-    .section {
-      position: relative;
-      z-index: 1;
-      padding: 5rem 2.5rem;
-    }
-
-    .section-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--orange);
-      margin-bottom: 3rem;
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-    }
-
-    .section-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-      max-width: 200px;
-    }
-
-    /* ── ANNOUNCEMENT POSTER SECTION ── */
-    .poster-section {
-      background: var(--mid);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      overflow: hidden;
-    }
-
-    .poster-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-bottom: 2.5rem;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    .poster-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
-      letter-spacing: 0.04em;
-      line-height: 1;
-    }
-
-    .poster-title small {
-      display: block;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.25em;
-      color: var(--muted);
-      text-transform: uppercase;
-      margin-bottom: 0.4rem;
-    }
-
-    .tg-link {
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--orange);
-      text-decoration: none;
-      border: 1px solid var(--orange);
-      padding: 0.6rem 1.2rem;
-      transition: background 0.2s, color 0.2s;
-      display: inline-block;
-    }
-
-    .tg-link:hover { background: var(--orange); color: var(--black); }
-
-    /* Main poster card */
-    /* AFTER */
-    .poster-card {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      max-width: 100%;
-      overflow: hidden;
+.hero-content {
+  position: relative;
+  z-index: 1;
 }
 
-    /* AFTER */
-    .poster-img-wrap {
-      position: relative;
-      overflow: hidden;
-      background: #111;
-      min-height: 480px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      max-width: 100%;
-    }
-
-    .poster-img-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
-      position: absolute;
-      inset: 0;
-      transition: transform 0.6s ease;
-    }
-
-    .poster-img-wrap:hover img { transform: scale(1.03); }
-
-    /* AFTER */
-    .poster-meta {
-      background: var(--card-bg);
-      padding: 2.5rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 1.5rem;
-      overflow: hidden;
-      min-width: 0;
-    }
-
-    .poster-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.6rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      background: var(--orange);
-      color: var(--black);
-      padding: 0.35rem 0.9rem;
-      font-weight: 700;
-      width: fit-content;
-    }
-
-    /* AFTER */
-    .poster-caption {
-      font-size: 0.82rem;
-      line-height: 2;
-      color: var(--off-white);
-      flex: 1;
-      overflow-wrap: break-word;
-      word-break: break-word;
-      max-width: 100%;
+.hero-eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
 }
 
-    .poster-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 0.8rem;
-    }
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 2px;
+  background: var(--orange);
+}
 
-    .poster-date {
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      color: var(--muted);
-      text-transform: uppercase;
-    }
+.hero-title {
+  font-family: 'bebas neue', sans-serif;
+  font-size: clamp(4.5rem, 13vw, 11rem);
+  line-height: 0.88;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--off-white);
+}
 
-    .poster-open {
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--orange);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
+.hero-title span {
+  color: var(--orange);
+  display: block;
+}
 
-    .poster-open:hover { text-decoration: underline; }
+.hero-sub {
+  margin-top: 2rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+  text-transform: uppercase;
+  max-width: 360px;
+  line-height: 1.9;
+}
 
-    /* Loading skeleton */
-    .poster-skeleton {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 1rem;
-      min-height: 300px;
-    }
+.hero-scroll {
+  margin-top: 3rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
 
-    .sk-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--orange);
-      display: inline-block;
-      animation: skpulse 1.2s ease-in-out infinite;
-    }
+.hero-scroll .line {
+  width: 48px;
+  height: 1px;
+  background: var(--muted);
+  position: relative;
+  overflow: hidden;
+}
 
-    .sk-dot:nth-child(2) { animation-delay: 0.2s; }
-    .sk-dot:nth-child(3) { animation-delay: 0.4s; }
+.hero-scroll .line::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: var(--orange);
+  animation: scan 2s ease-in-out infinite;
+}
 
-    @keyframes skpulse {
-      0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
-      40%  { transform: scale(1);   opacity: 1; }
-    }
+@keyframes scan {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
 
-    /* Error / no-image state */
-    .poster-error {
-      border: 1px dashed var(--border);
-      padding: 3rem 2rem;
-      text-align: center;
-    }
+/* ── DIAGONAL DIVIDER ── */
+.divider {
+  height: 80px;
+  background: var(--black);
+  position: relative;
+  z-index: 2;
+}
 
-    .poster-error h3 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.8rem;
-      letter-spacing: 0.08em;
-      color: var(--orange);
-      margin-bottom: 0.6rem;
-    }
+/* ── SECTION LAYOUT ── */
+.section {
+  position: relative;
+  z-index: 1;
+  padding: 5rem 2.5rem;
+}
 
-    .poster-error p {
-      font-size: 0.73rem;
-      line-height: 2;
-      color: var(--muted);
-      max-width: 460px;
-      margin: 0 auto;
-    }
+.section-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 3rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
 
-    .poster-error code {
-      background: #1a1a1a;
-      border: 1px solid var(--border);
-      padding: 0.2rem 0.5rem;
-      color: var(--orange);
-      font-size: 0.73rem;
-    }
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+  max-width: 200px;
+}
 
-    @media (max-width: 900px) {
-      .poster-card { grid-template-columns: 1fr; }
-      .poster-img-wrap { min-height: 340px; }
-      .poster-meta { padding: 1.5rem; }
-    } 
+/* ── ANNOUNCEMENT POSTER SECTION ── */
+.poster-section {
+  background: var(--mid);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
 
-    /* ── SOCIAL LINKS ── */
-    .socials-section {
-      background: var(--black);
-    }
+.poster-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
 
-    .socials-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
-      letter-spacing: 0.04em;
-      margin-bottom: 3rem;
-      line-height: 1;
-    }
+.poster-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
 
-    .socials-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 2px;
-      background: var(--border);
-    }
+.poster-title small {
+  display: block;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
 
-    .social-card {
-      background: var(--card-bg);
-      padding: 2rem 2rem 2.5rem;
-      text-decoration: none;
-      color: var(--off-white);
-      display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
-      transition: background 0.25s;
-      border: 0;
-      position: relative;
-      overflow: hidden;
-    }
+.tg-link {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--orange);
+  text-decoration: none;
+  border: 1px solid var(--orange);
+  padding: 0.6rem 1.2rem;
+  transition: background 0.2s, color 0.2s;
+  display: inline-block;
+}
 
-    .social-card::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0;
-      width: 0; height: 3px;
-      background: var(--orange);
-      transition: width 0.35s ease;
-    }
+.tg-link:hover { background: var(--orange); color: var(--black); }
 
-    .social-card:hover { background: #161616; }
-    .social-card:hover::after { width: 100%; }
+.poster-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  max-width: 100%;
+  overflow: hidden;
+}
 
-    .social-icon {
-      width: 48px; height: 48px;
-      border: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--orange);
-      font-size: 1.3rem;
-      flex-shrink: 0;
-    }
+.poster-img-wrap {
+  position: relative;
+  overflow: hidden;
+  background: #111;
+  min-height: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
+}
 
-    .social-name {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.6rem;
-      letter-spacing: 0.06em;
-    }
+.poster-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  position: absolute;
+  inset: 0;
+  transition: transform 0.6s ease;
+}
 
-    .social-handle {
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
-      color: var(--muted);
-      text-transform: uppercase;
-    }
+.poster-img-wrap:hover img { transform: scale(1.03); }
 
-    .social-arrow {
-      margin-top: auto;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--orange);
-    }
+.poster-meta {
+  background: var(--card-bg);
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.5rem;
+  overflow: hidden;
+  min-width: 0;
+}
 
-    /* ── ABOUT STRIP ── */
-    .about-strip {
-      background: var(--orange);
-      color: var(--black);
-      padding: 3rem 2.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 2rem;
-      flex-wrap: wrap;
-    }
+.poster-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  background: var(--orange);
+  color: var(--black);
+  padding: 0.35rem 0.9rem;
+  font-weight: 700;
+  width: fit-content;
+}
 
-    .about-strip-text {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(1.8rem, 4vw, 3rem);
-      letter-spacing: 0.04em;
-      line-height: 1.1;
-    }
+.poster-caption {
+  font-size: 0.82rem;
+  line-height: 2;
+  color: var(--off-white);
+  flex: 1;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  max-width: 100%;
+}
 
-    .about-strip-sub {
-      font-size: 0.75rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      opacity: 0.7;
-      max-width: 380px;
-      line-height: 2;
-      font-family: 'Space Mono', monospace;
-    }
+.poster-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
 
-    /* ── FOOTER ── */
-    footer {
-      background: var(--mid);
-      border-top: 1px solid var(--border);
-      padding: 2rem 2.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
+.poster-date {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
 
-    .footer-logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.2rem;
-      letter-spacing: 0.15em;
-      color: var(--orange);
-    }
+.poster-open {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--orange);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
 
-    .footer-copy {
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-      color: var(--muted);
-      text-transform: uppercase;
-    }
+.poster-open:hover { text-decoration: underline; }
 
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+.poster-skeleton {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+  min-height: 300px;
+}
 
-    .hero-content > * {
-      animation: fadeUp 0.8s ease forwards;
-      opacity: 0;
-    }
+.sk-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--orange);
+  display: inline-block;
+  animation: skpulse 1.2s ease-in-out infinite;
+}
 
-    .hero-eyebrow { animation-delay: 0.1s; }
-    .hero-title   { animation-delay: 0.25s; }
-    .hero-sub     { animation-delay: 0.4s; }
-    .hero-scroll  { animation-delay: 0.55s; }
+.sk-dot:nth-child(2) { animation-delay: 0.2s; }
+.sk-dot:nth-child(3) { animation-delay: 0.4s; }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 700px) {
-      .nav { padding: 1rem 1.2rem; }
-      .hero { padding: 2rem 1.2rem 3rem; }
-      .section { padding: 3.5rem 1.2rem; }
-      .about-strip { padding: 2rem 1.2rem; }
-      footer { padding: 1.5rem 1.2rem; }
-    }
+@keyframes skpulse {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; }
+}
 
-    /* ── TICKER STRIP ── */
-    /* AFTER */
-    /* AFTER */
-    .ticker {
-      background: var(--orange);
-      color: var(--black);
-      padding: 0.6rem 0;
-      overflow: hidden;
-      white-space: nowrap;
-      max-width: 100%;
-      transform: translateZ(0);
-      will-change: transform;
-    }
+.poster-error {
+  border: 1px dashed var(--border);
+  padding: 3rem 2rem;
+  text-align: center;
+}
 
-    .ticker-inner {
-      display: inline-block;
-      animation: ticker 22s linear infinite;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.1rem;
-      letter-spacing: 0.2em;
-    }
+.poster-error h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 0.08em;
+  color: var(--orange);
+  margin-bottom: 0.6rem;
+}
 
-    @keyframes ticker {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-  </style>
+.poster-error p {
+  font-size: 0.73rem;
+  line-height: 2;
+  color: var(--muted);
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+.poster-error code {
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  padding: 0.2rem 0.5rem;
+  color: var(--orange);
+  font-size: 0.73rem;
+}
+
+@media (max-width: 900px) {
+  .poster-card { grid-template-columns: 1fr; }
+  .poster-img-wrap { min-height: 340px; }
+  .poster-meta { padding: 1.5rem; }
+}
+
+/* ── SOCIAL LINKS ── */
+.socials-section {
+  background: var(--black);
+}
+
+.socials-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  letter-spacing: 0.04em;
+  margin-bottom: 3rem;
+  line-height: 1;
+}
+
+.socials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2px;
+  background: var(--border);
+}
+
+.social-card {
+  background: var(--card-bg);
+  padding: 2rem 2rem 2.5rem;
+  text-decoration: none;
+  color: var(--off-white);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  transition: background 0.25s;
+  border: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.social-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 0; height: 3px;
+  background: var(--orange);
+  transition: width 0.35s ease;
+}
+
+.social-card:hover { background: #161616; }
+.social-card:hover::after { width: 100%; }
+
+.social-icon {
+  width: 48px; height: 48px;
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--orange);
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.social-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 0.06em;
+}
+
+.social-handle {
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.social-arrow {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+
+/* ── ABOUT STRIP ── */
+.about-strip {
+  background: var(--orange);
+  color: var(--black);
+  padding: 3rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.about-strip-text {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+}
+
+.about-strip-sub {
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  max-width: 380px;
+  line-height: 2;
+  font-family: 'Space Mono', monospace;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--mid);
+  border-top: 1px solid var(--border);
+  padding: 2rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.15em;
+  color: var(--orange);
+}
+
+.footer-copy {
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-content > * {
+  animation: fadeUp 0.8s ease forwards;
+  opacity: 0;
+}
+
+.hero-eyebrow { animation-delay: 0.1s; }
+.hero-title   { animation-delay: 0.25s; }
+.hero-sub     { animation-delay: 0.4s; }
+.hero-scroll  { animation-delay: 0.55s; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 700px) {
+  .nav { padding: 1rem 1.2rem; }
+  .hero { padding: 2rem 1.2rem 3rem; }
+  .section { padding: 3.5rem 1.2rem; }
+  .about-strip { padding: 2rem 1.2rem; }
+  footer { padding: 1.5rem 1.2rem; }
+}
+
+/* ── TICKER STRIP ── */
+.ticker {
+  background: var(--orange);
+  color: var(--black);
+  padding: 0.6rem 0;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 100%;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.ticker-inner {
+  display: inline-block;
+  animation: ticker 22s linear infinite;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.2em;
+}
+
+@keyframes ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+</style>
 </head>
 <body>
 
-  <!-- NAV -->
-    <nav class="nav">
-      <img src="logo.svg" alt="Lebu KHC Youth" class="nav-logo" style="height: 40px; width: auto;" />
-      <span class="nav-tag">Addis Ababa · Ethiopia</span>
-    </nav>
+<!-- NAV -->
+<nav class="nav">
+  <a href="#home" style="line-height:0;">
+    <img src="logo.svg" alt="Lebu KHC Youth" class="nav-logo" style="height: 40px; width: auto;" />
+  </a>
+  <ul class="nav-links">
+    <li><a href="#announcement">Announcement</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#platforms">Platforms</a></li>
+    <li><a href="#prayer">Prayer</a></li>
+    <li><a href="#location">Location</a></li>
+  </ul>
+  <span class="nav-tag">Addis Ababa · Ethiopia</span>
+</nav>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-bg">
-      <img src="https://res.cloudinary.com/dgxqifwdf/image/upload/w_1920,q_auto,f_auto/v1779729184/youth-photo_xbqdbr.jpg" fetchpriority="high" alt="Lebu KHC Youth" style="
-          position: absolute;
-          inset: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          object-position: center;
-          opacity: 0.18;
-        " />
-    </div>
-
-    <div class="hero-lines">
-      <svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <line x1="0" y1="600" x2="1200" y2="200" stroke="rgba(255,102,0,0.07)" stroke-width="1"/>
-        <line x1="0" y1="750" x2="1200" y2="350" stroke="rgba(255,102,0,0.05)" stroke-width="1"/>
-        <line x1="600" y1="0" x2="900" y2="800" stroke="rgba(255,102,0,0.06)" stroke-width="1"/>
-        <line x1="800" y1="0" x2="1100" y2="800" stroke="rgba(255,102,0,0.04)" stroke-width="1"/>
-        <circle cx="980" cy="200" r="180" fill="none" stroke="rgba(255,102,0,0.06)" stroke-width="1"/>
-        <circle cx="980" cy="200" r="120" fill="none" stroke="rgba(255,102,0,0.04)" stroke-width="1"/>
-        <circle cx="980" cy="200" r="60" fill="none" stroke="rgba(255,102,0,0.08)" stroke-width="1"/>
-      </svg>
-    </div>
-    <div class="hero-content">
-      <p class="hero-eyebrow">Follow the Movement</p>
-      <h1 class="hero-title">
-        Lebu
-        <span>KHC</span>
-        Youth
-      </h1>
-      <p class="hero-sub">
-        A community of young believers moving together — find us on every platform.
-      </p>
-      <div class="hero-scroll">
-        <span class="line"></span>
-        scroll to explore
-      </div>
-    </div>
-  </section>
-
-  <!-- TICKER -->
-  <div class="ticker">
-    <span class="ticker-inner">
-      LEBU KHC YOUTH &nbsp;·&nbsp; FAITH &nbsp;·&nbsp; COMMUNITY &nbsp;·&nbsp; PURPOSE &nbsp;·&nbsp;
-      LEBU KHC YOUTH &nbsp;·&nbsp; FAITH &nbsp;·&nbsp; COMMUNITY &nbsp;·&nbsp; PURPOSE &nbsp;·&nbsp;
-      LEBU KHC YOUTH &nbsp;·&nbsp; FAITH &nbsp;·&nbsp; COMMUNITY &nbsp;·&nbsp; PURPOSE &nbsp;·&nbsp;
-      LEBU KHC YOUTH &nbsp;·&nbsp; FAITH &nbsp;·&nbsp; COMMUNITY &nbsp;·&nbsp; PURPOSE &nbsp;·&nbsp;
-    </span>
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg">
+    <img src="https://res.cloudinary.com/dgxqifwdf/image/upload/w_1920,q_auto,f_auto/v1779729184/youth-photo_xbqdbr.jpg" fetchpriority="high" alt="Lebu KHC Youth" style="
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      opacity: 0.18;
+    " />
+  </div>
+  <div class="hero-lines">
+    <svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <line x1="0" y1="600" x2="1200" y2="200" stroke="rgba(255,102,0,0.07)" stroke-width="1"/>
+      <line x1="0" y1="750" x2="1200" y2="350" stroke="rgba(255,102,0,0.05)" stroke-width="1"/>
+      <line x1="600" y1="0" x2="900" y2="800" stroke="rgba(255,102,0,0.06)" stroke-width="1"/>
+      <line x1="800" y1="0" x2="1100" y2="800" stroke="rgba(255,102,0,0.04)" stroke-width="1"/>
+      <circle cx="980" cy="200" r="180" fill="none" stroke="rgba(255,102,0,0.06)" stroke-width="1"/>
+      <circle cx="980" cy="200" r="120" fill="none" stroke="rgba(255,102,0,0.04)" stroke-width="1"/>
+      <circle cx="980" cy="200" r="60"  fill="none" stroke="rgba(255,102,0,0.08)" stroke-width="1"/>
+    </svg>
   </div>
 
-  <!-- ANNOUNCEMENT POSTER — fetches latest image from Telegram channel -->
-  <section class="section poster-section">
-    <div class="poster-header">
-      <div class="poster-title">
-        <small>Latest Announcement</small>
-        This Week's Poster
-      </div>
-      <a class="tg-link" id="tg-channel-link" href="https://t.me/YOUR_TELEGRAM_CHANNEL" target="_blank" rel="noopener">
-        Open Channel →
-      </a>
-    </div>
-
-    <div id="poster-container">
-      <!-- Loading state -->
-      <div class="poster-skeleton" id="poster-loading">
-        <div style="display:flex;gap:6px;">
-          <span class="sk-dot"></span>
-          <span class="sk-dot"></span>
-          <span class="sk-dot"></span>
-        </div>
-        <span style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);">Fetching latest poster…</span>
-      </div>
-    </div>
-  </section>
-
-  <script>
-    // ════════════════════════════════════════════════════════════════
-    //  SETUP — replace the value below with your public Telegram
-    //  channel username (no @ sign), e.g.  "LebuyouthKHC"
-    // ════════════════════════════════════════════════════════════════
-    const TG_CHANNEL = 'LebuKHCyouth';
-    // ════════════════════════════════════════════════════════════════
-
-    document.getElementById('tg-channel-link').href = 'https://t.me/' + TG_CHANNEL;
-
-    const CONTAINER = document.getElementById('poster-container');
-
-    function strip(html) {
-      return (html || '').replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
-    }
-
-    function trunc(str, n) {
-      return str.length > n ? str.slice(0, n).trimEnd() + '…' : str;
-    }
-
-    function fmtDate(str) {
-      const d = new Date(str);
-      return isNaN(d) ? '' : d.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
-    }
-
-    function showSetup() {
-      CONTAINER.innerHTML = `
-        <div class="poster-error">
-          <h3>Connect Your Channel</h3>
-          <p>
-            In <code>index.html</code> find this line near the bottom and update it:<br><br>
-            <code>const TG_CHANNEL = 'YOUR_TELEGRAM_CHANNEL';</code><br><br>
-            Replace <code>YOUR_TELEGRAM_CHANNEL</code> with your channel's public username (no @).
-            Your channel must be <strong style="color:var(--off-white)">public</strong> for this to work.
-          </p>
-        </div>`;
-    }
-
-    function showFail(detail) {
-      CONTAINER.innerHTML = `
-        <div class="poster-error">
-          <h3>Could Not Load Poster</h3>
-          <p>
-            Make sure your Telegram channel is <strong style="color:var(--off-white)">public</strong>
-            and the channel name in <code>index.html</code> is correct.<br><br>
-            <span style="color:var(--muted);font-size:0.68rem;">${detail || ''}</span><br><br>
-            In the meantime, <a href="https://t.me/${TG_CHANNEL}" target="_blank" style="color:var(--orange);">view the channel directly →</a>
-          </p>
-        </div>`;
-    }
-
-    function renderPoster(imgSrc, caption, date, postUrl) {
-      const imgHalf = imgSrc ? `
-        <a class="poster-img-wrap" href="${postUrl}" target="_blank" rel="noopener">
-          <img src="${imgSrc}" alt="Latest announcement poster" loading="eager"
-               onerror="this.closest('.poster-img-wrap').style.display='none';this.closest('.poster-card').style.gridTemplateColumns='1fr'" />
-        </a>` : '';
-
-      CONTAINER.innerHTML = `
-        <div class="poster-card" style="${!imgSrc ? 'grid-template-columns:1fr' : ''}">
-          ${imgHalf}
-          <div class="poster-meta">
-            <span class="poster-badge">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M21.2 5.1L2.9 12.1c-1.1.4-1.1 1.1-.2 1.4l4.6 1.4 1.8 5.5c.2.6.4.8.9.8.4 0 .6-.2 1-.5l2.4-2.3 4.7 3.5c.9.5 1.5.2 1.7-.8L22 6.2c.3-1.2-.4-1.7-1.2-1.1z"/>
-              </svg>
-              Latest from Telegram
-            </span>
-            <p class="poster-caption">${caption || 'Open Telegram to read the full announcement.'}</p>
-            <div class="poster-footer">
-              <span class="poster-date">${date}</span>
-              <a class="poster-open" href="${postUrl}" target="_blank" rel="noopener">
-                View on Telegram
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
-              </a>
-            </div>
-          </div>
-        </div>`;
-    }
-
-    async function loadPoster() {
-      if (!TG_CHANNEL || TG_CHANNEL === 'YOUR_TELEGRAM_CHANNEL') { showSetup(); return; }
-
-      try {
-        // Call our Vercel Edge Function — server-side fetch, CDN-cached for 30 min
-        const res  = await fetch('/api/poster');
-        if (!res.ok) throw new Error('API ' + res.status);
-        const data = await res.json();
-        if (!data.ok) throw new Error(data.error || 'No photo found');
-        renderPoster(data.imgSrc, data.caption, fmtDate(data.date), data.postUrl);
-      } catch (err) {
-        console.warn('Poster load error:', err);
-        showFail(err.message);
-      }
-    }
-
-        loadPoster();
-  </script>
-
-  <!-- ABOUT STRIP -->
-  <div class="about-strip">
-    <div class="about-strip-text">
-      Rooted in faith.<br>Rising together.
-    </div>
-    <p class="about-strip-sub">
-      Lebu KHC Youth is part of Kale Hiwot Church — a generation on fire for God, community, and purpose.
+  <div class="hero-content">
+    <p class="hero-eyebrow">Follow the Movement</p>
+    <h1 class="hero-title">
+      Lebu
+      <span>KHC</span>
+      Youth
+    </h1>
+    <p class="hero-sub">
+      A community of young believers moving together — find us on every platform.
     </p>
+    <div class="hero-scroll">
+      <span class="line"></span>
+      scroll to explore
+    </div>
   </div>
+</section>
 
-  <!-- SOCIAL LINKS -->
-  <section class="section socials-section">
-    <p class="section-label">Find Us Online</p>
-    <h2 class="socials-title">Our Platforms</h2>
+<!-- TICKER -->
+<div class="ticker">
+  <span class="ticker-inner">
+    LEBU KHC YOUTH &nbsp;·&nbsp; FAITH &nbsp;·&nbsp; COMMUNITY &nbsp;·&nbsp; PURPOSE &nbsp;·&nbsp;
+    LEBU KHC YOUTH &nbsp;·&nbsp; FAITH &nbsp;·&nbsp; COMMUNITY &nbsp;·&nbsp; PURPOSE &nbsp;·&nbsp;
+    LEBU KHC YOUTH &nbsp;·&nbsp; FAITH &nbsp;·&nbsp; COMMUNITY &nbsp;·&nbsp; PURPOSE &nbsp;·&nbsp;
+    LEBU KHC YOUTH &nbsp;·&nbsp; FAITH &nbsp;·&nbsp; COMMUNITY &nbsp;·&nbsp; PURPOSE &nbsp;·&nbsp;
+  </span>
+</div>
 
-    <div class="socials-grid">
+<!-- ANNOUNCEMENT POSTER -->
+<section class="section poster-section" id="announcement">
+  <div class="poster-header">
+    <div class="poster-title">
+      <small>Latest Announcement</small>
+      This Week's Poster
+    </div>
+    <a class="tg-link" id="tg-channel-link" href="https://t.me/YOUR_TELEGRAM_CHANNEL" target="_blank" rel="noopener">
+      Open Channel →
+    </a>
+  </div>
+  <div id="poster-container">
+    <!-- Loading state -->
+    <div class="poster-skeleton" id="poster-loading">
+      <div style="display:flex;gap:6px;">
+        <span class="sk-dot"></span>
+        <span class="sk-dot"></span>
+        <span class="sk-dot"></span>
+      </div>
+      <span style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);">Fetching latest poster…</span>
+    </div>
+  </div>
+</section>
 
-      <!-- Instagram -->
-      <a class="social-card" href="https://www.instagram.com/lebu_khc" target="_blank" rel="noopener">
-        <div class="social-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-          </svg>
-        </div>
-        <div>
-          <div class="social-name">Instagram</div>
-          <div class="social-handle">@lebu_khc</div>
-        </div>
-        <div class="social-arrow">
-          Follow us
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
-        </div>
-      </a>
+<script>
+// ════════════════════════════════════════════════════════════════
+// SETUP — replace the value below with your public Telegram
+// channel username (no @ sign), e.g. "LebuyouthKHC"
+// ════════════════════════════════════════════════════════════════
+const TG_CHANNEL = 'LebuKHCyouth';
+// ════════════════════════════════════════════════════════════════
 
-      <!-- Telegram -->
-      <a class="social-card" href="https://t.me/LebuKHCyouth" target="_blank" rel="noopener">
-        <div class="social-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+document.getElementById('tg-channel-link').href = 'https://t.me/' + TG_CHANNEL;
+
+const CONTAINER = document.getElementById('poster-container');
+
+function strip(html) {
+  return (html || '').replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+}
+function trunc(str, n) {
+  return str.length > n ? str.slice(0, n).trimEnd() + '…' : str;
+}
+function fmtDate(str) {
+  const d = new Date(str);
+  return isNaN(d) ? '' : d.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+function showSetup() {
+  CONTAINER.innerHTML = `
+    <div class="poster-error">
+      <h3>Connect Your Channel</h3>
+      <p>
+        In <code>index.html</code> find this line near the bottom and update it:<br><br>
+        <code>const TG_CHANNEL = 'YOUR_TELEGRAM_CHANNEL';</code><br><br>
+        Replace <code>YOUR_TELEGRAM_CHANNEL</code> with your channel's public username (no @).
+        Your channel must be <strong style="color:var(--off-white)">public</strong> for this to work.
+      </p>
+    </div>`;
+}
+
+function showFail(detail) {
+  CONTAINER.innerHTML = `
+    <div class="poster-error">
+      <h3>Could Not Load Poster</h3>
+      <p>
+        Make sure your Telegram channel is <strong style="color:var(--off-white)">public</strong>
+        and the channel name in <code>index.html</code> is correct.<br><br>
+        <span style="color:var(--muted);font-size:0.68rem;">${detail || ''}</span><br><br>
+        In the meantime, <a href="https://t.me/${TG_CHANNEL}" target="_blank" style="color:var(--orange);">view the channel directly →</a>
+      </p>
+    </div>`;
+}
+
+function renderPoster(imgSrc, caption, date, postUrl) {
+  const imgHalf = imgSrc ? `
+    <a class="poster-img-wrap" href="${postUrl}" target="_blank" rel="noopener">
+      <img src="${imgSrc}" alt="Latest announcement poster" loading="eager"
+        onerror="this.closest('.poster-img-wrap').style.display='none';this.closest('.poster-card').style.gridTemplateColumns='1fr'" />
+    </a>` : '';
+
+  CONTAINER.innerHTML = `
+    <div class="poster-card" style="${!imgSrc ? 'grid-template-columns:1fr' : ''}">
+      ${imgHalf}
+      <div class="poster-meta">
+        <span class="poster-badge">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
             <path d="M21.2 5.1L2.9 12.1c-1.1.4-1.1 1.1-.2 1.4l4.6 1.4 1.8 5.5c.2.6.4.8.9.8.4 0 .6-.2 1-.5l2.4-2.3 4.7 3.5c.9.5 1.5.2 1.7-.8L22 6.2c.3-1.2-.4-1.7-1.2-1.1z"/>
           </svg>
+          Latest from Telegram
+        </span>
+        <p class="poster-caption">${caption || 'Open Telegram to read the full announcement.'}</p>
+        <div class="poster-footer">
+          <span class="poster-date">${date}</span>
+          <a class="poster-open" href="${postUrl}" target="_blank" rel="noopener">
+            View on Telegram
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+          </a>
         </div>
-        <div>
-          <div class="social-name">Telegram</div>
-          <div class="social-handle">@LebuKHCyouth</div>
-        </div>
-        <div class="social-arrow">
-          Join Channel
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
-        </div>
-      </a>
+      </div>
+    </div>`;
+}
 
-      <!-- YouTube -->
-      <a class="social-card" href="https://www.youtube.com/@lkhcyouth" target="_blank" rel="noopener">
-        <div class="social-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.45A2.78 2.78 0 0 0 1.46 6.42 29.94 29.94 0 0 0 1 12a29.94 29.94 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.97C5.12 20 12 20 12 20s6.88 0 8.59-.45a2.78 2.78 0 0 0 1.95-1.97A29.94 29.94 0 0 0 23 12a29.94 29.94 0 0 0-.46-5.58z"/>
-            <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/>
-          </svg>
-        </div>
-        <div>
-          <div class="social-name">YouTube</div>
-          <div class="social-handle">@lkhcyouth</div>
-        </div>
-        <div class="social-arrow">
-          Watch Now
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
-        </div>
-      </a>
+async function loadPoster() {
+  if (!TG_CHANNEL || TG_CHANNEL === 'YOUR_TELEGRAM_CHANNEL') { showSetup(); return; }
+  try {
+    const res = await fetch('/api/poster');
+    if (!res.ok) throw new Error('API ' + res.status);
+    const data = await res.json();
+    if (!data.ok) throw new Error(data.error || 'No photo found');
+    renderPoster(data.imgSrc, data.caption, fmtDate(data.date), data.postUrl);
+  } catch (err) {
+    console.warn('Poster load error:', err);
+    showFail(err.message);
+  }
+}
 
-      <!-- TikTok -->
-      <a class="social-card" href="https://www.tiktok.com/@lebu_khc" target="_blank" rel="noopener">
-        <div class="social-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/>
-          </svg>
-        </div>
-        <div>
-          <div class="social-name">TikTok</div>
-          <div class="social-handle">@lebu_khc</div>
-        </div>
-        <div class="social-arrow">
-          Watch Shorts
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
-        </div>
-      </a>
+loadPoster();
+</script>
 
-    </div>
-  </section>
+<!-- ABOUT STRIP -->
+<div class="about-strip" id="about">
+  <div class="about-strip-text">
+    Rooted in faith.<br>Rising together.
+  </div>
+  <p class="about-strip-sub">
+    Lebu KHC Youth is part of Kale Hiwot Church — a generation on fire for God, community, and purpose.
+  </p>
+</div>
 
-  <!-- PRAYER SECTION -->
-<section class="section" style="background: var(--mid); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+<!-- SOCIAL LINKS -->
+<section class="section socials-section" id="platforms">
+  <p class="section-label">Find Us Online</p>
+  <h2 class="socials-title">Our Platforms</h2>
+  <div class="socials-grid">
+
+    <!-- Instagram -->
+    <a class="social-card" href="https://www.instagram.com/lebu_khc" target="_blank" rel="noopener">
+      <div class="social-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+        </svg>
+      </div>
+      <div>
+        <div class="social-name">Instagram</div>
+        <div class="social-handle">@lebu_khc</div>
+      </div>
+      <div class="social-arrow">
+        Follow us
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+      </div>
+    </a>
+
+    <!-- Telegram -->
+    <a class="social-card" href="https://t.me/LebuKHCyouth" target="_blank" rel="noopener">
+      <div class="social-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21.2 5.1L2.9 12.1c-1.1.4-1.1 1.1-.2 1.4l4.6 1.4 1.8 5.5c.2.6.4.8.9.8.4 0 .6-.2 1-.5l2.4-2.3 4.7 3.5c.9.5 1.5.2 1.7-.8L22 6.2c.3-1.2-.4-1.7-1.2-1.1z"/>
+        </svg>
+      </div>
+      <div>
+        <div class="social-name">Telegram</div>
+        <div class="social-handle">@LebuKHCyouth</div>
+      </div>
+      <div class="social-arrow">
+        Join Channel
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+      </div>
+    </a>
+
+    <!-- YouTube -->
+    <a class="social-card" href="https://www.youtube.com/@lkhcyouth" target="_blank" rel="noopener">
+      <div class="social-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.45A2.78 2.78 0 0 0 1.46 6.42 29.94 29.94 0 0 0 1 12a29.94 29.94 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.97C5.12 20 12 20 12 20s6.88 0 8.59-.45a2.78 2.78 0 0 0 1.95-1.97A29.94 29.94 0 0 0 23 12a29.94 29.94 0 0 0-.46-5.58z"/>
+          <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/>
+        </svg>
+      </div>
+      <div>
+        <div class="social-name">YouTube</div>
+        <div class="social-handle">@lkhcyouth</div>
+      </div>
+      <div class="social-arrow">
+        Watch Now
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+      </div>
+    </a>
+
+    <!-- TikTok -->
+    <a class="social-card" href="https://www.tiktok.com/@lebu_khc" target="_blank" rel="noopener">
+      <div class="social-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/>
+        </svg>
+      </div>
+      <div>
+        <div class="social-name">TikTok</div>
+        <div class="social-handle">@lebu_khc</div>
+      </div>
+      <div class="social-arrow">
+        Watch Shorts
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- PRAYER SECTION -->
+<section class="section" id="prayer" style="background: var(--mid); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
   <p class="section-label">Prayer Wall</p>
   <h2 class="socials-title" style="margin-bottom: 0.8rem;">Send a Prayer</h2>
   <p style="font-size:0.75rem; letter-spacing:0.15em; color:var(--muted); text-transform:uppercase; line-height:1.9; margin-bottom: 2.5rem; max-width:480px;">
@@ -875,9 +867,7 @@
   </p>
 
   <div style="max-width: 620px;">
-
     <div id="prayer-result" style="display:none; margin-bottom:1.5rem;"></div>
-
     <textarea
       id="prayer-input"
       placeholder="Write your prayer here…"
@@ -899,7 +889,6 @@
       onfocus="this.style.borderColor='var(--orange)'"
       onblur="this.style.borderColor='rgba(255,102,0,0.2)'"
     ></textarea>
-
     <div style="display:flex; align-items:center; justify-content:space-between; margin-top:1rem; flex-wrap:wrap; gap:1rem;">
       <p style="font-size:0.62rem; letter-spacing:0.18em; color:var(--muted); text-transform:uppercase;">
         🔒 100% anonymous · We never see who you are
@@ -926,81 +915,74 @@
 </section>
 
 <script>
-  // ← paste your Apps Script Web App URL here
-  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxX1L9P-5JW8kuLMe0oUKxZprsUcvlVwkurPGtDNwCoVufPACtlNDZYvmJiguIPAK6X/exec';
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxX1L9P-5JW8kuLMe0oUKxZprsUcvlVwkurPGtDNwCoVufPACtlNDZYvmJiguIPAK6X/exec';
 
-  async function submitPrayer() {
-    const input  = document.getElementById('prayer-input');
-    const btn    = document.getElementById('prayer-btn');
-    const result = document.getElementById('prayer-result');
-    const text   = input.value.trim();
+async function submitPrayer() {
+  const input  = document.getElementById('prayer-input');
+  const btn    = document.getElementById('prayer-btn');
+  const result = document.getElementById('prayer-result');
+  const text   = input.value.trim();
 
-    if (!text || text.length < 5) {
-      result.style.display = 'block';
-      result.innerHTML = `<p style="font-size:0.75rem;letter-spacing:0.15em;color:var(--orange);text-transform:uppercase;">Please write your prayer first.</p>`;
-      return;
-    }
-
-    btn.textContent = 'Sending…';
-    btn.disabled = true;
-    result.style.display = 'none';
-
-    try {
-      // Use no-cors mode — Google Apps Script requires this from browsers
-      await fetch(SHEET_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prayer: text })
-      });
-
-      // no-cors returns an opaque response so we can't read it,
-      // but if fetch didn't throw, the request was sent successfully
-      input.value = '';
-      result.style.display = 'block';
-      result.innerHTML = `
-        <div style="border:1px solid var(--border);padding:1.2rem 1.5rem;background:var(--card-bg);">
-          <p style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:0.08em;color:var(--orange);margin-bottom:0.3rem;">🙏 Prayer Received</p>
-          <p style="font-size:0.72rem;letter-spacing:0.15em;color:var(--muted);text-transform:uppercase;line-height:1.9;">Your prayer has been sent anonymously. Our team will pray with you.</p>
-        </div>`;
-
-    } catch {
-      result.style.display = 'block';
-      result.innerHTML = `<p style="font-size:0.75rem;letter-spacing:0.15em;color:var(--orange);text-transform:uppercase;">Something went wrong. Please try again.</p>`;
-    }
-
-    btn.textContent = 'Send Prayer →';
-    btn.disabled = false;
+  if (!text || text.length < 5) {
+    result.style.display = 'block';
+    result.innerHTML = `<p style="font-size:0.75rem;letter-spacing:0.15em;color:var(--orange);text-transform:uppercase;">Please write your prayer first.</p>`;
+    return;
   }
+
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+  result.style.display = 'none';
+
+  try {
+    await fetch(SHEET_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prayer: text })
+    });
+
+    input.value = '';
+    result.style.display = 'block';
+    result.innerHTML = `
+      <div style="border:1px solid var(--border);padding:1.2rem 1.5rem;background:var(--card-bg);">
+        <p style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:0.08em;color:var(--orange);margin-bottom:0.3rem;">🙏 Prayer Received</p>
+        <p style="font-size:0.72rem;letter-spacing:0.15em;color:var(--muted);text-transform:uppercase;line-height:1.9;">Your prayer has been sent anonymously. Our team will pray with you.</p>
+      </div>`;
+  } catch {
+    result.style.display = 'block';
+    result.innerHTML = `<p style="font-size:0.75rem;letter-spacing:0.15em;color:var(--orange);text-transform:uppercase;">Something went wrong. Please try again.</p>`;
+  }
+
+  btn.textContent = 'Send Prayer →';
+  btn.disabled = false;
+}
 </script>
 
-  <!-- MAP SECTION -->
-<section class="section" style="background: var(--black); padding-top: 5rem; padding-bottom: 0;">
+<!-- LOCATION / MAP SECTION -->
+<section class="section" id="location" style="background: var(--black); border-top: 1px solid var(--border);">
   <p class="section-label">Find Us</p>
   <h2 class="socials-title" style="margin-bottom: 2rem;">Where We Meet</h2>
-  <p style="font-size:0.75rem; letter-spacing:0.15em; color:var(--muted); text-transform:uppercase; margin-bottom: 2rem; line-height:1.9;">
+  <p style="font-size:0.75rem; letter-spacing:0.15em; color:var(--muted); text-transform:uppercase; line-height:1.9; margin-bottom: 2rem;">
     Lebu Kale Hiwot Church · Addis Ababa, Ethiopia
   </p>
-  <div style="
-    border: 1px solid rgba(255,102,0,0.2);
-    overflow: hidden;
-    position: relative;
-    width: 100%;
-    height: 450px;
-  ">
+  <div style="border: 1px solid var(--border); overflow: hidden; max-width: 900px;">
     <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3663.9561162489204!2d38.720181574671464!3d8.96643089109245!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x164b81ed525222dd%3A0x6aa5c2ef8fda01ae!2sLebu%20Kalehiwot%20Church!5e1!3m2!1sen!2set!4v1779703656907!5m2!1sen!2set" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>"
-    </iframe>
-    <!-- Orange accent bar on top -->
-    <div style="position:absolute; top:0; left:0; right:0; height:3px; background:var(--orange); z-index:1;"></div>
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3663.9561162489204!2d38.720181574671464!3d8.96643089109245!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x164b81ed525222dd%3A0x6aa5c2ef8fda01ae!2sLebu%20Kalehiwot%20Church!5e1!3m2!1sen!2set!4v1779703656907!5m2!1sen!2set"
+      width="100%"
+      height="420"
+      style="border:0; display:block; filter: grayscale(0.3) contrast(1.1);"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+    ></iframe>
   </div>
 </section>
 
-  <!-- FOOTER -->
-  <footer>
-    <span class="footer-logo">Lebu KHC Youth</span>
-    <span class="footer-copy">© 2025 · Addis Ababa, Ethiopia · Built with faith</span>
-  </footer>
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">Lebu KHC Youth</span>
+  <span class="footer-copy">© 2025 · Addis Ababa, Ethiopia · Built with faith</span>
+</footer>
 
 </body>
 </html>
