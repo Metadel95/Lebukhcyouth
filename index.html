@@ -607,12 +607,19 @@
     }
 
     .ticker-inner {
-      display: inline-block;
-      animation: ticker 22s linear infinite;
+      display: inline-flex;
+      white-space: nowrap;
+      animation: ticker 30s linear infinite;
       font-family: 'Bebas Neue', sans-serif;
       font-size: 1.1rem;
       letter-spacing: 0.2em;
+      will-change: transform;
     }
+
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
 
     @keyframes ticker {
       0% { transform: translateX(0); }
@@ -674,10 +681,6 @@
   <div class="ticker">
     <span class="ticker-inner">
       LEBU KHC YOUTH &nbsp;·&nbsp; FAITH &nbsp;·&nbsp; COMMUNITY &nbsp;·&nbsp; PURPOSE &nbsp;·&nbsp;
-      LEBU KHC YOUTH &nbsp;·&nbsp; FAITH &nbsp;·&nbsp; COMMUNITY &nbsp;·&nbsp; PURPOSE &nbsp;·&nbsp;
-      LEBU KHC YOUTH &nbsp;·&nbsp; FAITH &nbsp;·&nbsp; COMMUNITY &nbsp;·&nbsp; PURPOSE &nbsp;·&nbsp;
-      LEBU KHC YOUTH &nbsp;·&nbsp; FAITH &nbsp;·&nbsp; COMMUNITY &nbsp;·&nbsp; PURPOSE &nbsp;·&nbsp;
-    </span>
   </div>
 
   <!-- ANNOUNCEMENT POSTER — fetches latest image from Telegram channel -->
