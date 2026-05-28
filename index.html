@@ -75,7 +75,7 @@ body::before {
 }
 
 .nav {
-  position: relative;
+  position: fixed;
   z-index: 100;
   display: flex;
   justify-content: space-between;
@@ -123,6 +123,11 @@ body::before {
   letter-spacing: 0.2em;
   color: var(--muted);
   text-transform: uppercase;
+}
+
+/* Collapse nav links on small screens */
+@media (max-width: 700px) {
+  .nav-links { display: none; }
 }
 
 .hero-content {
