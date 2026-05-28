@@ -607,19 +607,12 @@
     }
 
     .ticker-inner {
-      display: inline-flex;
-      white-space: nowrap;
+      display: inline-block;
+      animation: ticker 22s linear infinite;
       font-family: 'Bebas Neue', sans-serif;
       font-size: 1.1rem;
       letter-spacing: 0.2em;
-      will-change: transform;
-      transform: translateX(0);
     }
-
-@keyframes ticker {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
 
     @keyframes ticker {
       0% { transform: translateX(0); }
@@ -1035,27 +1028,6 @@
     <span class="footer-logo">Lebu KHC Youth</span>
     <span class="footer-copy">© 2025 · Addis Ababa, Ethiopia · Built with faith</span>
   </footer>
-  
-  <script>
-    let lastScroll = 0;
-    let tickerPos  = 0;
-    const ticker   = document.querySelector('.ticker-inner');
-    const maxShift = ticker.scrollWidth / 2;
-
-    window.addEventListener('scroll', () => {
-      const current = window.scrollY;
-      const delta   = current - lastScroll;
-      lastScroll    = current;
-
-      tickerPos -= delta * 0.4; // speed multiplier — increase for faster
-
-      // Loop seamlessly when it reaches halfway
-      if (tickerPos <= -maxShift) tickerPos += maxShift;
-      if (tickerPos > 0) tickerPos = 0;
-
-      ticker.style.transform = `translateX(${tickerPos}px)`;
-    });
-  </script>
 
 </body>
 </html>
