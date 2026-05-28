@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prayer · Lebu KHC Youth</title>
+  <link rel="icon" type="image/svg+xml" href="YOUR_LOGO_URL" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --orange: #ff6600;
+      --black: #0a0a0a;
+      --off-white: #f2ede6;
+      --mid: #1a1a1a;
+      --muted: #6b6b6b;
+      --card-bg: #111111;
+      --border: rgba(255,102,0,0.2);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--black);
+      color: var(--off-white);
+      font-family: 'Space Mono', monospace;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 560px;
+    }
+
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.2em;
+      color: var(--orange);
+      margin-bottom: 3rem;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .eyebrow {
+      font-size: 0.62rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .eyebrow::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--orange);
+    }
+
+    h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 10vw, 5rem);
+      letter-spacing: 0.04em;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .desc {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      text-transform: uppercase;
+      line-height: 2;
+      margin-bottom: 2.5rem;
+    }
+
+    .anon-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      background: var(--mid);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 0.4rem 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+
+    textarea {
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--off-white);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      line-height: 1.9;
+      padding: 1.2rem;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s;
+      min-height: 180px;
+    }
+
+    textarea:focus { border-color: var(--orange); }
+
+    textarea::placeholder { color: var(--muted); }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .anon-note {
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    button {
+      background: var(--orange);
+      color: var(--black);
+      border: none;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.12em;
+      padding: 0.7rem 2rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button:hover { background: #cc4f00; }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    #result { margin-top: 1.5rem; }
+
+    .success {
+      border: 1px solid var(--border);
+      padding: 1.2rem 1.5rem;
+      background: var(--card-bg);
+    }
+
+    .success h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.08em;
+      color: var(--orange);
+      margin-bottom: 0.3rem;
+    }
+
+    .success p {
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      text-transform: uppercase;
+      line-height: 1.9;
+    }
+
+    .error-msg {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      color: var(--orange);
+      text-transform: uppercase;
+    }
+
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      margin-top: 3rem;
+      transition: color 0.2s;
+    }
+
+    .back:hover { color: var(--orange); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="logo" href="/">← Lebu KHC Youth</a>
+
+    <p class="eyebrow">Prayer Wall</p>
+    <h1>Send a Prayer</h1>
+    <p class="desc">Share what's on your heart. Our team receives it privately and prays with you.</p>
+
+    <div class="anon-badge">
+      🔒 100% Anonymous · No name · No account
+    </div>
+
+    <textarea id="prayer-input" placeholder="Write your prayer here…"></textarea>
+
+    <div class="actions">
+      <span class="anon-note">We never see who you are</span>
+      <button id="prayer-btn" onclick="submitPrayer()">Send Prayer →</button>
+    </div>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const SHEET_URL = 'YOUR_APPS_SCRIPT_URL'; // ← same URL from your main site
+
+    async function submitPrayer() {
+      const input  = document.getElementById('prayer-input');
+      const btn    = document.getElementById('prayer-btn');
+      const result = document.getElementById('result');
+      const text   = input.value.trim();
+
+      if (!text || text.length < 5) {
+        result.innerHTML = `<p class="error-msg">Please write your prayer first.</p>`;
+        return;
+      }
+
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
+      result.innerHTML = '';
+
+      try {
+        await fetch(SHEET_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prayer: text })
+        });
+
+        input.value = '';
+        result.innerHTML = `
+          <div class="success">
+            <h3>🙏 Prayer Received</h3>
+            <p>Your prayer has been sent anonymously.<br>Our team will pray with you.</p>
+          </div>`;
+      } catch {
+        result.innerHTML = `<p class="error-msg">Something went wrong. Please try again.</p>`;
+      }
+
+      btn.textContent = 'Send Prayer →';
+      btn.disabled = false;
+    }
+  </script>
+</body>
+</html>
