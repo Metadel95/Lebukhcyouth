@@ -607,11 +607,19 @@
     }
 
     .ticker-inner {
-      display: inline-block;
-      animation: ticker 22s linear infinite;
+      display: inline-flex;
+      gap: 0;
       font-family: 'Bebas Neue', sans-serif;
       font-size: 1.1rem;
       letter-spacing: 0.2em;
+      white-space: nowrap;
+      will-change: transform;
+    }
+
+    .ticker-item {
+      display: inline-block;
+      padding-right: 3rem;
+      flex-shrink: 0;
     }
 
     @keyframes ticker {
@@ -672,11 +680,8 @@
 
   <!-- TICKER -->
   <div class="ticker">
-    <span class="ticker-inner">
-      LEBU KHC YOUTH &nbsp;·&nbsp; FAITH &nbsp;·&nbsp; COMMUNITY &nbsp;·&nbsp; PURPOSE &nbsp;·&nbsp;
-      LEBU KHC YOUTH &nbsp;·&nbsp; FAITH &nbsp;·&nbsp; COMMUNITY &nbsp;·&nbsp; PURPOSE &nbsp;·&nbsp;
-      LEBU KHC YOUTH &nbsp;·&nbsp; FAITH &nbsp;·&nbsp; COMMUNITY &nbsp;·&nbsp; PURPOSE &nbsp;·&nbsp;
-      LEBU KHC YOUTH &nbsp;·&nbsp; FAITH &nbsp;·&nbsp; COMMUNITY &nbsp;·&nbsp; PURPOSE &nbsp;·&nbsp;
+    <span class="ticker-inner" id="ticker-inner">
+      <span class="ticker-item">LEBU KHC YOUTH &nbsp;·&nbsp; FAITH &nbsp;·&nbsp; COMMUNITY &nbsp;·&nbsp; PURPOSE &nbsp;·&nbsp; ROOTED IN CHRIST &nbsp;·&nbsp; RISING TOGETHER</span>
     </span>
   </div>
 
@@ -1028,6 +1033,36 @@
     <span class="footer-logo">Lebu KHC Youth</span>
     <span class="footer-copy">© 2025 · Addis Ababa, Ethiopia · Built with faith</span>
   </footer>
+
+  <script>
+    (function() {
+      const inner = document.getElementById('ticker-inner');
+      const item  = inner.querySelector('.ticker-item');
+
+      // Clone enough times to fill 3x the screen width
+      const copies = Math.ceil((window.innerWidth * 3) / item.offsetWidth) + 2;
+      for (let i = 0; i < copies; i++) {
+        inner.appendChild(item.cloneNode(true));
+      }
+
+      const totalItems = inner.querySelectorAll('.ticker-item').length;
+      const singleWidth = item.offsetWidth;
+      let pos = 0;
+      let animId;
+
+      function tick() {
+        pos -= 1; // speed — lower = slower, higher = faster
+        // Reset position once one full item has scrolled off
+        if (Math.abs(pos) >= singleWidth) {
+          pos += singleWidth;
+        }
+        inner.style.transform = `translateX(${pos}px)`;
+        animId = requestAnimationFrame(tick);
+      }
+
+      tick();
+    })();
+  </script>
 
 </body>
 </html>
